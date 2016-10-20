@@ -1,17 +1,19 @@
 package org.test;
 
-import javax.servlet.annotation.WebServlet;
-//Adyw56ez
-//adyw56ez
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.util.BeanContainer;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 
+import javax.servlet.annotation.WebServlet;
 import java.util.List;
+
+//Adyw56ez
+//adyw56ez
 
 @Theme("mytheme")
 public class MyUI extends UI {
@@ -30,17 +32,19 @@ public class MyUI extends UI {
                     customerService.findAll(e.getText())));
         });
 
-        Button clearFieldsButton = new Button("Clear filter");
+        Button clearFieldsButton = new Button(FontAwesome.TIMES);
 
         clearFieldsButton.addClickListener(e -> {
             filterText.clear();
             updateList();
         });
 
+        CssLayout filtering = new CssLayout();
+        filtering.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
+        filtering.addComponents(filterText, clearFieldsButton);
+
         grid.setColumns("firstName", "lastName", "email");
-
-
-        verticalLayout.addComponents(filterText, clearFieldsButton, grid);
+        verticalLayout.addComponents(filtering, grid);
 
 
         updateList();
@@ -49,6 +53,7 @@ public class MyUI extends UI {
         verticalLayout.setSpacing(true);
 
         setContent(verticalLayout);
+
     }
 
     public void updateList() {
